@@ -96,10 +96,6 @@ int main()
 				break;
 			case 6:
 				r=numeroRecord(nomeFile);	//chiamata della funzione numeroRecord
-				if(r==-1)	//controllo in caso la funzione non ha trovato alcun record stampa messaggio di errore
-				{
-					printf("Nessun record non trovato\n");
-				}
 				printf("Nel file sono presenti %d record\n", r);
 				break;
 			case 0:		//chiusura del programma
