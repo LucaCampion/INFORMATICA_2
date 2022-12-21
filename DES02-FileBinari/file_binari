@@ -142,7 +142,7 @@ int menuu(void)
 
 
 /** ****************************************************************************************
-* @brief inserisce in coda n record con i dati richiesti all�utente. Se il file non esiste va creato e quindi effettuare l�inserimento.
+* @brief inserisce in coda n record con i dati richiesti all'utente. Se il file non esiste va creato e quindi effettuare l'inserimento.
 * @param  char fileName[]: percorso del file, int numRecord: numero di struct
 * @retval <valori restituiti>
 * @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
@@ -156,7 +156,7 @@ void inserisciRecord(char fileName[], int numRecord)
 {
 	FILE *fp;	//puntatore al file
 	alunno buffer;		//varaibile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"wb"); //apertura del file passato come parametro in modalit� write binary
+	fp=fopen(fileName,"wb"); //apertura del file passato come parametro in modalità write binary
 	if(fp!=NULL) //controllo che il file possa essere aperto
 	{
 		for(int i=0;i<numRecord;i++) //inserimento dei dati che avviene numRecord volte
@@ -194,10 +194,10 @@ void stampaFile(char fileName[])
 {
 	FILE *fp;		//puntatore al file
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalit� read binary
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalità read binary
 	if(fp!=NULL)//controllo che il file possa essere aperto
 	{
-		while(!feof(fp))	//esegue le istruzioni finch� il file non � finito
+		while(!feof(fp))	//esegue le istruzioni finchè il file non è finito
 		{
 			int n=fread(&buffer, sizeof(buffer),1,fp);	//funzione di lettura per leggere i dati nel file
 			if(n>0) //controllo che il record venga letto e evita che l'ultimo record venga stampato due volte
@@ -220,7 +220,7 @@ void stampaFile(char fileName[])
 }
 
 /** ****************************************************************************************
-* @brief per ogni record che ha il contenuto del campo cognome uguale al parametro, stampa cognome, et� e media dei voti. 
+* @brief per ogni record che ha il contenuto del campo cognome uguale al parametro, stampa cognome, età e media dei voti. 
 * @param  char fileName[]: percorso del file, char cognome[]: cognome da ricercare
 * @retval La funzione restituisce la posizione del primo record trovato.
 * @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
@@ -238,7 +238,7 @@ int ricercaRecord(char fileName[], char cognome[])
 	fp=fopen(fileName,"rb");
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
-		while(!feof(fp))	//esegue le istruzioni finch� il file non � finito
+		while(!feof(fp))	//esegue le istruzioni finchè il file non è finito
 		{
 			int n=fread(&buffer, sizeof(buffer),1,fp);	//funzione di lettura per leggere i dati nel file
 			if(n>0)//controllo che il record venga letto e evita che l'ultimo record venga stampato due volte
@@ -246,7 +246,7 @@ int ricercaRecord(char fileName[], char cognome[])
 				int k=strcmp(buffer.cognome, cognome); //funzione per il confronto di due stringhe che restituisce 0 in caso le due stringhe siano uguali
 				if(k==0) //controllo che le due stringhe siano uguali
 				{
-					int age=2022-buffer.nascita.anno; //calcolo dell'et�
+					int age=2022-buffer.nascita.anno; //calcolo dell'età
 					printf("Cognome: %s\t", buffer.cognome); 
 					printf("Eta': %d\t", age);
 					for(int i=0;i<V;i++)	//calcolo della media
@@ -283,7 +283,7 @@ int stampaRecord(char fileName[], int posizione)
 {
 	FILE *fp;		//puntatore al file
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalit� read binary
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalità read binary
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
 		fseek(fp,posizione*sizeof(buffer),SEEK_SET);	
@@ -315,9 +315,9 @@ int stampaRecord(char fileName[], int posizione)
 }
 
 /** ****************************************************************************************
-* @brief visualizza le informazioni del record richiamando la funzione stampaRecord e corregge l�intero record, con i nuovi dati richiesti all�utente.
+* @brief visualizza le informazioni del record richiamando la funzione stampaRecord e corregge l'intero record, con i nuovi dati richiesti all'utente.
 * @param char fileName[]: percorso del file, int posizione: indica la posizione di un record
-* @retval Restituisce 0 se il record � presente -1 altrimenti
+* @retval Restituisce 0 se il record è presente -1 altrimenti
 * @see See Also: viene richiamata la funzione stampaRecord
 *
 * @author Luca Campion
@@ -329,7 +329,7 @@ int correggiRecord(char fileName[], int posizione)
 {
 	FILE *fp;		//puntatore al file
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb+");	//apertura del file passato come parametro in modalit� read binary
+	fp=fopen(fileName,"rb+");	//apertura del file passato come parametro in modalità read binary
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
 		fseek(fp,posizione*sizeof(buffer),SEEK_SET);	
@@ -380,10 +380,10 @@ int numeroRecord(char fileName[])
 	FILE *fp;		//puntatore al file
 	int cont=0;
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalit� read binary
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalità read binary
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
-		while(!feof(fp))	//esegue le istruzioni finch� il file non � finito
+		while(!feof(fp))	//esegue le istruzioni finchè il file non è finito
 		{
 			int n=fread(&buffer, sizeof(buffer),1,fp);	//funzione di lettura per leggere i dati nel file
 			if(n>0)//controllo che il record venga letto
