@@ -53,25 +53,25 @@ int numeroRecord(char []);
 int main()
 {
 	char nomeFile[]={"test.dat"};		//percorso del file
-	int a, r, s; char cog[C];
+	int a, r, s; char cog[C];		//variabili d'appoggio
 	do
     {
-		s=menuu();
-		switch(s)
+		s=menuu();	//chiamata alla funzione menuu
+		switch(s)	//controllo della scelta fatta dall'utente
 		{
-			case 1:
+			case 1:	
 				printf("Quanti record si desidera? Inserire un intero\n");
 				scanf("%d", &a);
-				inserisciRecord(nomeFile, a);
+				inserisciRecord(nomeFile, a);	//chiamata della funzione inserisciRecord
 				break;
 			case 2:
-				stampaFile(nomeFile);
+				stampaFile(nomeFile);	//chiamata della funzione stampaFile
 				break;
 			case 3:
 				printf("Inserire un cognome da ricercare\n");
 				scanf("%s", cog);
-				r=ricercaRecord(nomeFile, cog);
-				if(r==-1)
+				r=ricercaRecord(nomeFile, cog);		//chiamata della funzione ricercaRecord
+				if(r!=1)	//controllo in caso il record non è stato trovato stampa messaggio di errore
 				{
 					printf("Record non trovato\n");
 				}
@@ -79,8 +79,8 @@ int main()
 			case 4:
 				printf("\nDi quale record si vuole visualizzare le informazioni? Inserire la posizione\n");
 				scanf("%d", &a);
-				r=stampaRecord(nomeFile, a);
-				if(r==-1)
+				r=stampaRecord(nomeFile, a);	//chiamata della funzione stampaRecord
+				if(r==-1)	//controllo in caso il record non è stato trovato stampa messaggio di errore
 				{
 					printf("Record non trovato\n");
 				}
@@ -88,24 +88,24 @@ int main()
 			case 5:
 				printf("\nDi quale record si vuole correggere le informazioni? Inserire la posizione\n");
 				scanf("%d", &a);
-				r=correggiRecord(nomeFile, a);
-				if(r==-1)
+				r=correggiRecord(nomeFile, a);	//chiamata della funzione correggiRecord
+				if(r==-1)	//controllo in caso il record non è stato trovato stampa messaggio di errore
 				{
 					printf("Record non trovato\n");
 				}
 				break;
 			case 6:
-				r=numeroRecord(nomeFile);
-				if(r==-1)
+				r=numeroRecord(nomeFile);	//chiamata della funzione numeroRecord
+				if(r==-1)	//controllo in caso la funzione non ha trovato alcun record stampa messaggio di errore
 				{
 					printf("Nessun record non trovato\n");
 				}
 				printf("Nel file sono presenti %d record\n", r);
 				break;
-			case 0:
+			case 0:		//chiusura del programma
 				printf("\nArrivederci!");				
 				break;
-			default:
+			default:	//stampa messaggio di errore in caso venga inserito qualcosa di non adeguato
 				printf("Errore, inserire uno dei numeri dati!");	
 				break;			
 		}	
@@ -114,28 +114,29 @@ int main()
 }
 
 /** ****************************************************************************************
-* @brief inserisce in coda n record con i dati richiesti all�utente. Se il file non esiste va creato e quindi effettuare l�inserimento.
-* @param  char fileName[]: percorso del file, int numRecord: numero di struct
+* @brief Funzione che stampa a schermo il menù per la scelta delle funzioni
+* @param  
 * @retval <valori restituiti>
 * @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
 *
 * @author Luca Campion
-* @version 1.0 1/12/2022
+* @version 1.0 21/12/2022
 * @version 1.1 <data> <Descrivere le modifiche apportate>
 */
 
 int menuu(void)
 {
 	int x;
-	printf("\n___________________________________________\n");
+	printf("\n_________________________________________________________________\n");
+	printf("Inserire uno dei seguenti numeri per la funzione desiderata: \n");
 	printf("(1)	inserisciRecord\n");
 	printf("(2)	stampaFile\n");
 	printf("(3)	ricercaRecord\n");
 	printf("(4)	stampaRecord\n");
 	printf("(5)	correggiRecord\n");
 	printf("(6)	numeroRecord\n");
-	printf("(0)	Exit\n");
-	printf("___________________________________________\n");
+	printf("(0)	Exit");
+	printf("\n_________________________________________________________________\n");
 	scanf("%d",&x);
 	return x;
 }
@@ -156,7 +157,7 @@ void inserisciRecord(char fileName[], int numRecord)
 {
 	FILE *fp;	//puntatore al file
 	alunno buffer;		//varaibile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"wb"); //apertura del file passato come parametro in modalità write binary
+	fp=fopen(fileName,"wb"); //apertura del file passato come parametro in writing binary mode
 	if(fp!=NULL) //controllo che il file possa essere aperto
 	{
 		for(int i=0;i<numRecord;i++) //inserimento dei dati che avviene numRecord volte
@@ -176,7 +177,7 @@ void inserisciRecord(char fileName[], int numRecord)
 			fwrite(&buffer, sizeof(buffer),1,fp);	//scrittura dei dati letti nel file passato come parametro
 		}
 	}
-	fclose(fp);
+	fclose(fp);		//chiusura del file
 }
 
 /** ****************************************************************************************
@@ -194,7 +195,7 @@ void stampaFile(char fileName[])
 {
 	FILE *fp;		//puntatore al file
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalità read binary
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in reading binary mode
 	if(fp!=NULL)//controllo che il file possa essere aperto
 	{
 		while(!feof(fp))	//esegue le istruzioni finchè il file non è finito
@@ -222,7 +223,7 @@ void stampaFile(char fileName[])
 /** ****************************************************************************************
 * @brief per ogni record che ha il contenuto del campo cognome uguale al parametro, stampa cognome, età e media dei voti. 
 * @param  char fileName[]: percorso del file, char cognome[]: cognome da ricercare
-* @retval La funzione restituisce la posizione del primo record trovato.
+* @retval La funzione restituisce la posizione del primo record trovato. -1 in caso di errore nell'apertura del file
 * @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
 *
 * @author Luca Campion
@@ -232,10 +233,10 @@ void stampaFile(char fileName[])
 
 int ricercaRecord(char fileName[], char cognome[])
 {
-	FILE *fp;
-	alunno buffer;
-	float media;
-	fp=fopen(fileName,"rb");
+	FILE *fp;	//puntatore al file
+	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
+	float media;	//variabile per il calcolo della media
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in reading binary mode
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
 		while(!feof(fp))	//esegue le istruzioni finchè il file non è finito
@@ -271,7 +272,7 @@ int ricercaRecord(char fileName[], char cognome[])
 /** ****************************************************************************************
 * @brief stampa le informazioni presenti nel record specificato dal parametro posizione. 
 * @param char fileName[]: percorso del file, int posizione: indica la posizione di un record
-* @retval Restituisce 0 se il record � presente -1 altrimenti
+* @retval Restituisce 0 se il record è presente -1 altrimenti
 * @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
 *
 * @author Luca Campion
@@ -283,10 +284,10 @@ int stampaRecord(char fileName[], int posizione)
 {
 	FILE *fp;		//puntatore al file
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalità read binary
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in reading binary mode
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
-		fseek(fp,posizione*sizeof(buffer),SEEK_SET);	
+		fseek(fp,posizione*sizeof(buffer),SEEK_SET);	//posiziono il puntatore sulla posizione desiderata	
 		int n=fread(&buffer, sizeof(buffer),1,fp);	//funzione di lettura per leggere i dati nel file
 		if(n>0)//controllo che il record venga letto 
 		{
@@ -329,10 +330,10 @@ int correggiRecord(char fileName[], int posizione)
 {
 	FILE *fp;		//puntatore al file
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb+");	//apertura del file passato come parametro in modalità read binary
+	fp=fopen(fileName,"rb+");	//apertura del file passato come parametro sia in reading che in writing binary mode
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
-		fseek(fp,posizione*sizeof(buffer),SEEK_SET);	
+		fseek(fp,posizione*sizeof(buffer),SEEK_SET);	//posiziono il puntatore sulla posizione desiderata
 		int n=fread(&buffer, sizeof(buffer),1,fp);	//funzione di lettura per leggere i dati nel file
 		int r=stampaRecord(fileName, posizione);
 		if(n>0)//controllo che il record venga letto
@@ -367,7 +368,7 @@ int correggiRecord(char fileName[], int posizione)
 /** ****************************************************************************************
 * @brief Funzione che restituisce il numero di record presenti nel file.
 * @param char fileName[]: percorso del file
-* @retval numero di record presenti nel file.
+* @retval Restituisce numero di record presenti nel file. Restiuisce -1 in caso di errore
 * @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
 *
 * @author Luca Campion
@@ -380,7 +381,7 @@ int numeroRecord(char fileName[])
 	FILE *fp;		//puntatore al file
 	int cont=0;
 	alunno buffer;	//variabile di tipo alunno(struct definito sopra) d'appoggio
-	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in modalità read binary
+	fp=fopen(fileName,"rb");	//apertura del file passato come parametro in reading binary mode
 	if(fp!=NULL)	//controllo che il file possa essere aperto
 	{
 		while(!feof(fp))	//esegue le istruzioni finchè il file non è finito
@@ -388,7 +389,7 @@ int numeroRecord(char fileName[])
 			int n=fread(&buffer, sizeof(buffer),1,fp);	//funzione di lettura per leggere i dati nel file
 			if(n>0)//controllo che il record venga letto
 			{
-				cont++;
+				cont++;	//incremento il contatore ogni volta che viene letto un record
 			}			
 		}
 		fclose(fp);	//chiusura del file
@@ -397,6 +398,6 @@ int numeroRecord(char fileName[])
 	else
 	{
 		printf("Errore in apertura file");
-		return -1;
+		return -1;	//restiuisce -1 in caso di errore
 	}
 }
