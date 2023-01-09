@@ -1,68 +1,64 @@
 /** ****************************************************************************************
 * \mainpage file_binari
 *
-* @brief Scrivere un programma in c che dal main, tramite menu, richiami le seguenti funzioni per gestire un file di record con i campi cognome, data di nascita, e 8 voti.
+* @brief Scrivere un programma in c che dal main, tramite menu, richiami le seguenti 
+* funzioni per gestire un file di record con i campi cognome, data di nascita, e 8 voti.
 * <specifiche del progetto>
 * <specifiche del collaudo>
 * 
 * @author Luca Campion
 * @date 1/12/2022 
-* @version 1.0 <data> Versione iniziale
-* @version 1.1 <data> <Descrivere le modifiche apportate>
+* @version 1.0 1/12/2022 Versione iniziale
+* @version 1.1 9/01/2023 Correzioni varie
 */
 
 //Inclusione delle librerie utili
-
 #include <stdio.h>
 #include <stdlib.h>		
 #include <string.h>
 
 //Definizione dell costanti
+#define NUM_VOTI 8
+#define DIM_COGNOME 100
 
-#define N 5
-#define V 8
-#define C 100
-
-//Definizione degli struct
-
+//Definizione delle struct
 struct s_data
 {
 	int giorno;
-	char mese [C];
+	char mese[10];
 	int anno;
-}typedef data;
+} typedef data;
 
 struct s_alunno
 {
 	int matricola;
-	char cognome [C];
+	char cognome[DIM_COGNOME];
 	data nascita;
-	int voti [V];
-}typedef alunno;
+	int voti [NUM_VOTI];
+} typedef alunno;
 
+/******************************************************************************************
 //Definizione delle varie funzioni
+/******************************************************************************************
 
 /** ****************************************************************************************
 * @brief Funzione che stampa a schermo il menù per la scelta delle funzioni
-* @param  
-* @retval <valori restituiti>
-* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+* @param nessuno 
+* @retval nessuno
 *
 * @author Luca Campion
 * @version 1.0 21/12/2022
-* @version 1.1 <data> <Descrivere le modifiche apportate>
 */
 int menuu(void);
 
 /** ****************************************************************************************
 * @brief inserisce in coda n record con i dati richiesti all'utente. Se il file non esiste va creato e quindi effettuare l'inserimento.
 * @param  char fileName[]: percorso del file, int numRecord: numero di struct
-* @retval <valori restituiti>
-* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+* @retval nessuno
+* @see stampaRecord
 *
 * @author Luca Campion
 * @version 1.0 1/12/2022
-* @version 1.1 <data> <Descrivere le modifiche apportate>
 */
 void inserisciRecord(char [], int);
 
@@ -128,8 +124,10 @@ int numeroRecord(char []);
 
 int main()
 {
-	char nomeFile[]={"test.dat"};		//percorso del file
-	int a, r, s; char cog[C];		//variabili d'appoggio
+	char nomeFile[]={"test.dat"};	//percorso del file
+	int a, r, s; 					
+	char cog[DIM_COGNOME];			
+
 	do
     {
 		s=menuu();	//chiamata alla funzione menuu
@@ -244,7 +242,7 @@ void inserisciRecord(char fileName[], int numRecord)
 			scanf("%s", buffer.nascita.mese);
 			printf("\nInserire l'anno di nascita: ");
 			scanf("%d", &buffer.nascita.anno);
-			for(int j=0;j<V;j++)
+			for(int j=0;j<NUM_VOTI;j++)
 			buffer.voti[j]=rand()%10+1;
 			fwrite(&buffer, sizeof(buffer),1,fp);	//scrittura dei dati letti nel file passato come parametro
 		}
@@ -281,7 +279,7 @@ void stampaFile(char fileName[])
 				printf("Mese di nascita: %s\t", buffer.nascita.mese);
 				printf("Anno di nascita: %d\t", buffer.nascita.anno);
 				printf("\nVoti: ");
-				for(int i=0;i<V;i++)
+				for(int i=0;i<NUM_VOTI;i++)
 					printf("%d ", buffer.voti[i]);
 				printf("\n");
 			}
@@ -322,11 +320,11 @@ int ricercaRecord(char fileName[], char cognome[])
 					int age=2022-buffer.nascita.anno; //calcolo dell'età
 					printf("Cognome: %s\t", buffer.cognome); 
 					printf("Eta': %d\t", age);
-					for(int i=0;i<V;i++)	//calcolo della media
+					for(int i=0;i<NUM_VOTI;i++)	//calcolo della media
 					{
 						media+=buffer.voti[i];
 					}
-					media/=V;
+					media/=NUM_VOTI;
 					printf("Media: %.2f", media);					
 				}
 			}
@@ -369,7 +367,7 @@ int stampaRecord(char fileName[], int posizione)
 			printf("Mese di nascita: %s\t", buffer.nascita.mese);
 			printf("Anno di nascita: %d\t", buffer.nascita.anno);
 			printf("\nVoti: ");
-			for(int i=0;i<V;i++)
+			for(int i=0;i<NUM_VOTI;i++)
 				printf("%d ", buffer.voti[i]);
 			printf("\n");
 			fclose(fp);
@@ -420,7 +418,7 @@ int correggiRecord(char fileName[], int posizione)
 			scanf("%s", buffer.nascita.mese);
 			printf("\nInserire l'anno di nascita: ");
 			scanf("%d", &buffer.nascita.anno);
-			for(int j=0;j<V;j++)
+			for(int j=0;j<NUM_VOTI;j++)
 			buffer.voti[j]=rand()%10+1;
 			fwrite(&buffer, sizeof(buffer),1,fp);	//scrittura dei dati letti nel file passato come parametro
 			fclose(fp);
@@ -473,3 +471,4 @@ int numeroRecord(char fileName[])
 		return -1;	//restiuisce -1 in caso di errore
 	}
 }
+
