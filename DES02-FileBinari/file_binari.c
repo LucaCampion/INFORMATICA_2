@@ -42,12 +42,88 @@ struct s_alunno
 
 //Definizione delle varie funzioni
 
+/** ****************************************************************************************
+* @brief Funzione che stampa a schermo il menù per la scelta delle funzioni
+* @param  
+* @retval <valori restituiti>
+* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+*
+* @author Luca Campion
+* @version 1.0 21/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 int menuu(void);
+
+/** ****************************************************************************************
+* @brief inserisce in coda n record con i dati richiesti all'utente. Se il file non esiste va creato e quindi effettuare l'inserimento.
+* @param  char fileName[]: percorso del file, int numRecord: numero di struct
+* @retval <valori restituiti>
+* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+*
+* @author Luca Campion
+* @version 1.0 1/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 void inserisciRecord(char [], int);
+
+/** ****************************************************************************************
+* @brief Funzione che esegue la visualizzazione a schermo dei dati degli struct letti dal file passato come parametro
+* @param  char fileName[]: percorso del file
+* @retval <valori restituiti>
+* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+*
+* @author Luca Campion
+* @version 1.0 1/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 void stampaFile(char []);
+
+/** ****************************************************************************************
+* @brief per ogni record che ha il contenuto del campo cognome uguale al parametro, stampa cognome, età e media dei voti. 
+* @param  char fileName[]: percorso del file, char cognome[]: cognome da ricercare
+* @retval La funzione restituisce la posizione del primo record trovato. -1 in caso di errore nell'apertura del file
+* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+*
+* @author Luca Campion
+* @version 1.0 19/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 int ricercaRecord(char [], char []);
+
+/** ****************************************************************************************
+* @brief stampa le informazioni presenti nel record specificato dal parametro posizione. 
+* @param char fileName[]: percorso del file, int posizione: indica la posizione di un record
+* @retval Restituisce 0 se il record è presente -1 altrimenti
+* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+*
+* @author Luca Campion
+* @version 1.0 19/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 int stampaRecord(char [], int );
+
+/** ****************************************************************************************
+* @brief visualizza le informazioni del record richiamando la funzione stampaRecord e corregge l'intero record, con i nuovi dati richiesti all'utente.
+* @param char fileName[]: percorso del file, int posizione: indica la posizione di un record
+* @retval Restituisce 0 se il record è presente -1 altrimenti
+* @see See Also: viene richiamata la funzione stampaRecord
+*
+* @author Luca Campion
+* @version 1.0 21/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 int correggiRecord(char [], int );
+
+/** ****************************************************************************************
+* @brief Funzione che restituisce il numero di record presenti nel file.
+* @param char fileName[]: percorso del file
+* @retval Restituisce numero di record presenti nel file. Restiuisce -1 in caso di errore
+* @see <See Also: Describes a cross-reference to classes, functions, methods, variables, ...>
+*
+* @author Luca Campion
+* @version 1.0 21/12/2022
+* @version 1.1 <data> <Descrivere le modifiche apportate>
+*/
 int numeroRecord(char []);
 
 int main()
